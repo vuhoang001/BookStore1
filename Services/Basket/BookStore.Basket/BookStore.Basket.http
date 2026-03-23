@@ -1,0 +1,13 @@
+@BookStore.Basket_HostAddress = http://localhost:5199
+
+#if (EnableOpenAPI)
+GET {{BookStore.Basket_HostAddress}}/openapi/v1.json
+Accept: application/json
+
+###
+#endif
+
+GET {{BookStore.Basket_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

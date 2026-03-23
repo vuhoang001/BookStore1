@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/ApiGateWays/">
+    <Project Path="ApiGateWays/BookStore.Gateway/BookStore.Gateway.csproj" />
+  </Folder>
+  <Folder Name="/BuildingBlocks/">
+    <Project Path="BuildingBlocks/BuildingBlocks.Chassis/BuildingBlocks.Chassis.csproj" />
+    <Project Path="BuildingBlocks/BuildingBlocks.SharedKernel/BuildingBlocks.SharedKernel.csproj" />
+  </Folder>
+  <Folder Name="/Services/" />
+  <Folder Name="/Services/Basket/">
+    <Project Path="Services/Basket/BookStore.Basket/BookStore.Basket.csproj" />
+  </Folder>
+  <Folder Name="/Services/Catalog/">
+    <Project Path="Services/Catalog/BookStore.Catalog/BookStore.Catalog.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="compose.yaml" />
+  </Folder>
+</Solution>

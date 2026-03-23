@@ -1,0 +1,52 @@
+# Build artifacts
+**/bin/
+**/obj/
+**/out/
+**/publish/
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+
+# Test artifacts
+**/TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Logs and runtime files
+*.log
+logs/
+*.pid
+*.stackdump
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.rsuser
+*.sln.docstates
+
+# IDE folders
+.vs/
+.idea/
+*.DotSettings.user
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+secrets/
+
+# Docker local overrides
+docker-compose.override.yml
+compose.override.yaml
+
+# Local tools/cache
+.cache/
