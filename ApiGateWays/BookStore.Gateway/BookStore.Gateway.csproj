@@ -8,7 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+
+
     <PackageReference Include="Yarp.ReverseProxy" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BuildingBlocks\BuildingBlocks.Chassis\BuildingBlocks.Chassis.csproj" />
   </ItemGroup>
 
   <ItemGroup>

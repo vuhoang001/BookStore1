@@ -7,7 +7,11 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+COPY ["Directory.Packages.props", "."]
 COPY ["Services/Basket/BookStore.Basket/BookStore.Basket.csproj", "Services/Basket/BookStore.Basket/"]
+COPY ["BuildingBlocks/BuildingBlocks.Chassis/BuildingBlocks.Chassis.csproj", "BuildingBlocks/BuildingBlocks.Chassis/"]
+COPY ["BuildingBlocks/BuildingBlocks.SharedKernel/BuildingBlocks.SharedKernel.csproj", "BuildingBlocks/BuildingBlocks.SharedKernel/"]
+COPY ["BuildingBlocks/BuildingBlocks.Constants/BuildingBlocks.Constants.csproj", "BuildingBlocks/BuildingBlocks.Constants/"]
 RUN dotnet restore "Services/Basket/BookStore.Basket/BookStore.Basket.csproj"
 COPY . .
 WORKDIR "/src/Services/Basket/BookStore.Basket"

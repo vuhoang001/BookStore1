@@ -7,7 +7,10 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+COPY ["Directory.Packages.props", "."]
 COPY ["ApiGateWays/BookStore.Gateway/BookStore.Gateway.csproj", "ApiGateWays/BookStore.Gateway/"]
+COPY ["BuildingBlocks/BuildingBlocks.Chassis/BuildingBlocks.Chassis.csproj", "BuildingBlocks/BuildingBlocks.Chassis/"]
+COPY ["BuildingBlocks/BuildingBlocks.SharedKernel/BuildingBlocks.SharedKernel.csproj", "BuildingBlocks/BuildingBlocks.SharedKernel/"]
 RUN dotnet restore "ApiGateWays/BookStore.Gateway/BookStore.Gateway.csproj"
 COPY . .
 WORKDIR "/src/ApiGateWays/BookStore.Gateway"

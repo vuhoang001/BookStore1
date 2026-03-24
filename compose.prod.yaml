@@ -1,0 +1,25 @@
+﻿services:
+  sqlserver:
+    env_file: .env.prod
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: ${DB_PASSWORD}
+    restart: always
+
+  bookstore.basket:
+    env_file: .env.prod
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__basketdb: ${BASKET_CONN}
+    restart: always
+
+  bookstore.catalog:
+    env_file: .env.prod
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: ${CATALOG_CONN}
+    restart: always
+
+  bookstore.gateway:
+    env_file: .env.prod
+    restart: always

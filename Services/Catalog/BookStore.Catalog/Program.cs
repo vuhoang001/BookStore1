@@ -1,17 +1,13 @@
+using BuildingBlocks.Chassis.ApiDocument;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Swagger/OpenAPI for .NET 8
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerWithForwardedPrefix("/catalog");
+
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+app.UseSwaggerWithForwardedPrefix();
 app.UseHttpsRedirection();
 
 var summaries = new[]
@@ -20,19 +16,19 @@ var summaries = new[]
 };
 
 app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+    {
+        var forecast = Enumerable.Range(1, 5).Select(index =>
+                                                         new WeatherForecast
+                                                         (
+                                                             DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+                                                             Random.Shared.Next(-20, 55),
+                                                             summaries[Random.Shared.Next(summaries.Length)]
+                                                         ))
+            .ToArray();
+        return forecast;
+    })
+    .WithName("GetWeatherForecast")
+    .WithOpenApi();
 
 app.Run();
 
