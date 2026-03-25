@@ -11,7 +11,10 @@ builder.Services.AddReverseProxy()
 var app = builder.Build();
 
 
-app.MapScalarFromYarp(builder.Configuration);
+app.MapScalarGateway(builder.Configuration,
+                     versions: ["v1", "v2"],
+                     scalarPath: "/scalar"
+);
 
 
 app.MapReverseProxy();
