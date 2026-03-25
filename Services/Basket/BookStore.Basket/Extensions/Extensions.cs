@@ -1,6 +1,7 @@
 using BookStore.Basket.Infrastructure;
 using BuildingBlocks.Chassis.CQRS.Pipelines;
 using BuildingBlocks.Chassis.EndPoints;
+using BuildingBlocks.Chassis.Exceptions;
 using FluentValidation;
 using MediatR;
 
@@ -22,6 +23,19 @@ internal static class Extensions
         services.AddValidatorsFromAssemblyContaining<IBasketApiMarker>(
             includeInternalTypes: true); // Register all endpoints
 
+
+        // Add exception handlers (specific first, global fallback last)
+        services.AddExceptionHandler<ValidationExceptionHandler>();
+        services.AddExceptionHandler<NotFoundExceptionHandler>();
+        services.AddExceptionHandler<GlobalExceptionHandler>();
+        services.AddProblemDetails(options =>
+        {
+            // Customize problem details to include traceId by default
+            options.CustomizeProblemDetails = context =>
+            {
+                context.ProblemDetails.Extensions["traceId"] = context.HttpContext.TraceIdentifier;
+            };
+        });
 
         services.AddEndpoints(typeof(IBasketApiMarker));
 

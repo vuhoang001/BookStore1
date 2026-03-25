@@ -16,6 +16,7 @@ builder.Services.AddApiDocument("Basket", configure: o => o
 
 var app = builder.Build();
 
+app.UseExceptionHandler();
 app.UseApiDocument();
 app.UseHttpsRedirection();
 

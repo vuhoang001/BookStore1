@@ -1,5 +1,6 @@
 using BookStore.Basket.Domain.AggregateModels.BookModel;
 using BuildingBlocks.Chassis.CQRS;
+using BuildingBlocks.Chassis.Exceptions;
 
 namespace BookStore.Basket.Features.Book.Create;
 
@@ -13,6 +14,10 @@ public sealed class CreateBookHandler(IBookRepository bookRepository) : ICommand
             new Domain.AggregateModels.BookModel.Book(command.Title, command.Price),
             cancellationToken
         );
+        
+        
+        throw new NotFoundException("Test Not Found Exception");
+
 
         await bookRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
         return result.Id;
