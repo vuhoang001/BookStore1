@@ -17,8 +17,8 @@ public interface IDbSeeder<in TContext>
 
 public static class BusMigrationDbContextExtensions
 {
-    private const int MaxMigrationAttempts = 5;
-    private static readonly TimeSpan InitialRetryDelay = TimeSpan.FromSeconds(2);
+    private const           int      MaxMigrationAttempts = 5;
+    private static readonly TimeSpan InitialRetryDelay    = TimeSpan.FromSeconds(2);
 
     /// <summary>
     /// Đăng ký một hosted service chạy EF Core migrations khi khởi động, không có seeding.
@@ -84,7 +84,7 @@ public static class BusMigrationDbContextExtensions
         where TContext : DbContext
     {
         using var loggerScope = services.CreateScope();
-        var logger = loggerScope.ServiceProvider.GetRequiredService<ILogger<TContext>>();
+        var       logger      = loggerScope.ServiceProvider.GetRequiredService<ILogger<TContext>>();
 
         logger.LogInformation(
             "Migrating database associated with context {DbContextName}",
@@ -151,10 +151,10 @@ public static class BusMigrationDbContextExtensions
         CancellationToken cancellationToken)
         where TContext : DbContext
     {
-        using var scope = services.CreateScope();
-        var scopeServices = scope.ServiceProvider;
-        var context = scopeServices.GetRequiredService<TContext>();
-        var strategy = context.Database.CreateExecutionStrategy();
+        using var scope         = services.CreateScope();
+        var       scopeServices = scope.ServiceProvider;
+        var       context       = scopeServices.GetRequiredService<TContext>();
+        var       strategy      = context.Database.CreateExecutionStrategy();
 
         await strategy.ExecuteAsync(
             ct => MigrateAndSeedAsync(context, scopeServices, seeder, ct),
@@ -169,7 +169,14 @@ public static class BusMigrationDbContextExtensions
         CancellationToken cancellationToken)
         where TContext : DbContext
     {
-        await context.Database.MigrateAsync(cancellationToken);
+        try
+        {
+            await context.Database.MigrateAsync(cancellationToken);
+        }
+        catch (Exception e)
+        {
+            // ignored
+        }
 
         await seeder(context, services, cancellationToken);
     }
@@ -177,8 +184,8 @@ public static class BusMigrationDbContextExtensions
     private static TimeSpan GetBackoffDelay(int attempt)
     {
         var jitterMilliseconds = Random.Shared.Next(100, 700);
-        var exponentialFactor = Math.Pow(2, attempt - 1);
-        var baseDelay = TimeSpan.FromMilliseconds(InitialRetryDelay.TotalMilliseconds * exponentialFactor);
+        var exponentialFactor  = Math.Pow(2, attempt - 1);
+        var baseDelay          = TimeSpan.FromMilliseconds(InitialRetryDelay.TotalMilliseconds * exponentialFactor);
 
         return baseDelay + TimeSpan.FromMilliseconds(jitterMilliseconds);
     }
@@ -196,7 +203,7 @@ public static class BusMigrationDbContextExtensions
         }
 
         return exception.Message.Contains("exclusive lock for migration", StringComparison.OrdinalIgnoreCase)
-               || exception.Message.Contains("timeout", StringComparison.OrdinalIgnoreCase)
-               || exception.Message.Contains("deadlock", StringComparison.OrdinalIgnoreCase);
+            || exception.Message.Contains("timeout", StringComparison.OrdinalIgnoreCase)
+            || exception.Message.Contains("deadlock", StringComparison.OrdinalIgnoreCase);
     }
 }

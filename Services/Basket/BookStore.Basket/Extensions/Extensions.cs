@@ -1,5 +1,8 @@
 using BookStore.Basket.Infrastructure;
+using BuildingBlocks.Chassis.CQRS.Pipelines;
 using BuildingBlocks.Chassis.EndPoints;
+using FluentValidation;
+using MediatR;
 
 namespace BookStore.Basket.Extensions;
 
@@ -11,9 +14,15 @@ internal static class Extensions
 
         builder.AddPersistenceServices();
 
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<IBasketApiMarker>());
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<IBasketApiMarker>())
+            .AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>))
+            .AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
-        // Register all endpoints
+        // Configuration fluent validation to scan for validators in the assembly containing the IRatingApiMarker interface, including internal types.
+        services.AddValidatorsFromAssemblyContaining<IBasketApiMarker>(
+            includeInternalTypes: true); // Register all endpoints
+
+
         services.AddEndpoints(typeof(IBasketApiMarker));
 
         services.AddVersioning();
