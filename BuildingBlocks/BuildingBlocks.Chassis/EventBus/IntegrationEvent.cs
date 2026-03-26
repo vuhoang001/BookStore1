@@ -1,6 +1,6 @@
 using BuildingBlocks.SharedKernel.Helpers;
 
-namespace BookStore.Basket.Domain.Events;
+namespace BuildingBlocks.Chassis.EventBus;
 
 public abstract record IntegrationEvent
 {

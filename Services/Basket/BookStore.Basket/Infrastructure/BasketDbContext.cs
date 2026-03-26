@@ -1,5 +1,6 @@
 using BookStore.Basket.Domain.AggregateModels.BookModel;
 using BuildingBlocks.Chassis.Repository;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.Basket.Infrastructure;
@@ -14,10 +15,14 @@ public class BasketDbContext(DbContextOptions<BasketDbContext> options) : DbCont
         return true;
     }
 
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(BasketDbContext).Assembly);
+
+        modelBuilder.AddInboxStateEntity();
+        modelBuilder.AddOutboxMessageEntity();
+        modelBuilder.AddOutboxStateEntity();
     }
 }

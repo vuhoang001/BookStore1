@@ -53,6 +53,7 @@ internal static class Extensions
             {
                 cfg.AddEntityFrameworkOutbox<CatalogDbContext>(outbox =>
                 {
+                    // Increase polling interval temporarily so you can observe records in OutboxMessage before dispatch.
                     outbox.QueryDelay = TimeSpan.FromSeconds(1);
 
                     outbox.DuplicateDetectionWindow = TimeSpan.FromMinutes(5);

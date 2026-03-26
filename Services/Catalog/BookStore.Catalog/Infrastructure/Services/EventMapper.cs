@@ -1,7 +1,7 @@
 using BookStore.Catalog.Domain.Events;
-using BookStore.Catalog.IntegrationEvents.Events;
 using BuildingBlocks.Chassis.EventBus;
 using BuildingBlocks.Chassis.EventBus.Dispatcher;
+using BuildingBlocks.Contracts.Catalog.IntegrationEvents;
 using BuildingBlocks.SharedKernel.SeedWork;
 
 namespace BookStore.Catalog.Infrastructure.Services;
@@ -14,8 +14,8 @@ public class EventMapper : IEventMapper
         {
             BookCreateEvent bookCreateEvent => new BookCreatedIntegrationEvent(
                 bookCreateEvent.BookId,
-                bookCreateEvent.Title,
-                bookCreateEvent.Price
+                bookCreateEvent.Title,  // Maps to BookName parameter
+                bookCreateEvent.Price   // Maps to BookPrice parameter
             ),
             _ => throw new ArgumentOutOfRangeException(nameof(@event), @event, null),
         };

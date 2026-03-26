@@ -1,6 +1,17 @@
 ﻿version: '3.9'
 
 services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-bookstore}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS:-bookstore123!}
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - bookstore-network
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
@@ -15,6 +26,7 @@ services:
       dockerfile: Services/Basket/BookStore.Basket/Dockerfile
     depends_on:
       - sqlserver
+      - rabbitmq
     networks:
       - bookstore-network
 

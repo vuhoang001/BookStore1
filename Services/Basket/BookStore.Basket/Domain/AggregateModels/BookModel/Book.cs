@@ -3,14 +3,23 @@ using BuildingBlocks.SharedKernel.SeedWork;
 
 namespace BookStore.Basket.Domain.AggregateModels.BookModel;
 
-public class Book(string title, decimal price) : AuditableEntity, IAggregateRoot
+public class Book : AuditableEntity, IAggregateRoot
 {
-    public string Title { get; private set; } = title;
-    public decimal Price { get; private set; } = price;
+    public Book(string title, decimal price)
+    {
+        Id = Guid.NewGuid();
+        Title = title;
+        Price = price;
+
+        RegisterDomainEvent(new BookCreateEvent(Id, Title, Price));
+    }
+
+    public string Title { get; private set; }
+    public decimal Price { get; private set; }
 
     public void UpdatePrice(decimal newPrice)
     {
-        Price          = newPrice;
+        Price = newPrice;
         LastModifiedAt = DateTime.UtcNow;
 
         RegisterDomainEvent(new BookUpdateEvent(this));

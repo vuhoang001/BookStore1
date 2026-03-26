@@ -13,7 +13,12 @@ var app = builder.Build();
 
 app.MapScalarGateway(builder.Configuration,
                      versions: ["v1", "v2"],
-                     scalarPath: "/scalar"
+                     scalarPath: "/scalar",
+                     scalarSetup: options =>
+                     {
+                         options.Theme  = ScalarTheme.Purple;
+                         options.Layout = ScalarLayout.Classic;
+                     }
 );
 
 

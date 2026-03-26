@@ -1,6 +1,8 @@
-namespace BookStore.Basket.Domain.Events.Dispatcher;
+using BuildingBlocks.SharedKernel.SeedWork;
 
-public class IEventMapper
+namespace BuildingBlocks.Chassis.EventBus.Dispatcher;
+
+public interface IEventMapper
 {
-    
+    IntegrationEvent MapToIntegrationEvent(DomainEvent @event);
 }

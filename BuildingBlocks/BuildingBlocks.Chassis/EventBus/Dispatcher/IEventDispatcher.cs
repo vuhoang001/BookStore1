@@ -1,6 +1,6 @@
 using BuildingBlocks.SharedKernel.SeedWork;
 
-namespace BookStore.Basket.Domain.Events.Dispatcher;
+namespace BuildingBlocks.Chassis.EventBus.Dispatcher;
 
 public interface IEventDispatcher
 {

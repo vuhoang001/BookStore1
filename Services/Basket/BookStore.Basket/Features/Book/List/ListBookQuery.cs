@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using BookStore.Basket.Infrastructure;
 using BuildingBlocks.Chassis.CQRS;
+using BuildingBlocks.Chassis.EF.Gridify;
 using BuildingBlocks.Chassis.Response;
 using BuildingBlocks.Constants.Core;
 using Gridify;
@@ -14,22 +15,31 @@ public sealed record ListBookQuery(
     int PageIndex,
     [property: Description("Number of items to return in a single page of results")]
     [property: DefaultValue(Pagination.DefaultPageSize)]
-    int PageSize
+    int PageSize,
+    [property: Description("Number of items to return in a single page of results")]
+    string? OrderBy,
+    string? Filter
 ) : IQuery<PaginatedItemsViewModel>;
 
 public sealed record ListBookQueryHandler(BasketDbContext Context)
     : IQueryHandler<ListBookQuery, PaginatedItemsViewModel>
 {
-    public Task<PaginatedItemsViewModel> Handle(ListBookQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedItemsViewModel> Handle(ListBookQuery request, CancellationToken cancellationToken)
     {
-        // var query = Context.Books.ApplyFiltering(filter).AsNoTracking();
-        //
-        // var count = await query.CountAsync(cancellationToken);
-        //
-        // var result = await query.ApplyOrdering(filter).ApplyPaging(filter).ToListAsync(cancellationToken);
-        //
-        //
-        // return new PaginatedItemsViewModel(filter.Page, filter.PageSize, count, result);
-        return Task.FromResult(new PaginatedItemsViewModel(1, 20, 20, "hoanag13"));
+        var filter = new QueryFilter
+        {
+            Filter   = request.Filter,
+            OrderBy  = request.OrderBy,
+            Page     = request.PageIndex,
+            PageSize = request.PageSize
+        }.ToGridify();
+
+        var query = Context.Books.AsNoTracking().ApplyFiltering(filter).AsQueryable();
+        var count = await query.CountAsync(cancellationToken);
+
+        var result = await query.ApplyOrdering(filter).ApplyPaging(filter).ToListAsync(cancellationToken);
+
+
+        return new PaginatedItemsViewModel(filter.Page, filter.PageSize, count, result);
     }
 }

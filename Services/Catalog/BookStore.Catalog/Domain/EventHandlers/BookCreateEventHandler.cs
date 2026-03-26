@@ -1,5 +1,4 @@
 using BookStore.Catalog.Domain.Events;
-using BookStore.Catalog.IntegrationEvents.Events;
 using BuildingBlocks.Chassis.EventBus.Dispatcher;
 using MediatR;
 
@@ -10,10 +9,11 @@ public class BookCreateEventHandler(IEventDispatcher pub, ILogger<BookCreateEven
 {
     public async Task Handle(BookCreateEvent notification, CancellationToken cancellationToken)
     {
+        logger.LogInformation("[IN-TX] Dispatching domain event to integration event for BookId {BookId}",
+                              notification.BookId);
         await pub.DispatchAsync(notification, cancellationToken);
 
-        logger.LogInformation("[IN-TX] Enqueued {EventType} to outbox for BookId {BookId}",
-                              nameof(BookCreatedIntegrationEvent),
+        logger.LogInformation("[IN-TX] Integration event enqueued to outbox for BookId {BookId}",
                               notification.BookId);
     }
 }

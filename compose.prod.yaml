@@ -11,6 +11,7 @@
     environment:
       ASPNETCORE_ENVIRONMENT: Production
       ConnectionStrings__basketdb: ${BASKET_CONN}
+      ConnectionStrings__queue: ${QUEUE_CONN}
     restart: always
 
   bookstore.catalog:

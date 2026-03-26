@@ -1,8 +1,12 @@
 using BookStore.Basket.Infrastructure;
+using BookStore.Basket.Infrastructure.Services;
 using BuildingBlocks.Chassis.CQRS.Pipelines;
 using BuildingBlocks.Chassis.EndPoints;
+using BuildingBlocks.Chassis.EventBus;
+using BuildingBlocks.Chassis.EventBus.Dispatcher;
 using BuildingBlocks.Chassis.Exceptions;
 using FluentValidation;
+using MassTransit;
 using MediatR;
 
 namespace BookStore.Basket.Extensions;
@@ -14,6 +18,10 @@ internal static class Extensions
         var services = builder.Services;
 
         builder.AddPersistenceServices();
+
+        services.AddScoped<IEventMapper, EventMapper>();
+        services.AddScoped<IEventDispatcher, EventDispatcher>();
+
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<IBasketApiMarker>())
             .AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>))
@@ -36,6 +44,29 @@ internal static class Extensions
                 context.ProblemDetails.Extensions["traceId"] = context.HttpContext.TraceIdentifier;
             };
         });
+
+
+        // Configure EventBus
+        builder.AddEventBus(
+            typeof(IBasketApiMarker),
+            cfg =>
+            {
+                cfg.AddEntityFrameworkOutbox<BasketDbContext>(outbox =>
+                {
+                    outbox.QueryDelay = TimeSpan.FromSeconds(1);
+
+                    outbox.DuplicateDetectionWindow = TimeSpan.FromMinutes(5);
+
+                    outbox.UseSqlServer();
+                    outbox.UseBusOutbox();
+                });
+
+                cfg.AddConfigureEndpointsCallback((context, _, configurator) =>
+                                                      configurator.UseEntityFrameworkOutbox<BasketDbContext>(context)
+                );
+            }
+        );
+
 
         services.AddEndpoints(typeof(IBasketApiMarker));
 

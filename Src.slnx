@@ -5,6 +5,7 @@
   <Folder Name="/BuildingBlocks/">
     <Project Path="BuildingBlocks/BuildingBlocks.Chassis/BuildingBlocks.Chassis.csproj" />
     <Project Path="BuildingBlocks/BuildingBlocks.Constants/BuildingBlocks.Constants.csproj" />
+    <Project Path="BuildingBlocks/BuildingBlocks.Contracts/BuildingBlocks.Contracts.csproj" />
     <Project Path="BuildingBlocks/BuildingBlocks.SharedKernel/BuildingBlocks.SharedKernel.csproj" />
   </Folder>
   <Folder Name="/Services/" />

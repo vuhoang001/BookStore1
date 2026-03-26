@@ -19,16 +19,17 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks.Chassis\BuildingBlocks.Chassis.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks.Constants\BuildingBlocks.Constants.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Domain\EventHandlers\" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks.Contracts\BuildingBlocks.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="..\..\..\.dockerignore">
       <Link>.dockerignore</Link>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="IntegrationEvents\Events\" />
   </ItemGroup>
 
 </Project>

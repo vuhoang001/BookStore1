@@ -4,7 +4,7 @@ using MassTransit;
 
 namespace BookStore.Basket.IntegrationEvents.Handlers;
 
-public class BookCreatedIntegrationEventHandler(
+public class BookCreatedIntegrationEventHandlerV2(
     ILogger<BookCreatedIntegrationEventHandler> logger,
     IBookRepository bookRepository)
     : IConsumer<BookCreatedIntegrationEvent>
@@ -38,8 +38,8 @@ public class BookCreatedIntegrationEventHandler(
         catch (Exception ex)
         {
             logger.LogError(ex, "[POST-COMMIT-ERROR] Failed to consume {EventType} for BookId {BookId}",
-                             nameof(BookCreatedIntegrationEvent),
-                             message.BookId);
+                            nameof(BookCreatedIntegrationEvent),
+                            message.BookId);
             throw;
         }
     }

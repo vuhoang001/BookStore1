@@ -5,6 +5,7 @@
     environment:
       ASPNETCORE_ENVIRONMENT: Staging
       ConnectionStrings__basketdb: ${BASKET_CONN}
+      ConnectionStrings__queue: ${QUEUE_CONN}
     restart: on-failure
 
   bookstore.catalog:

@@ -22,7 +22,4 @@ public class HasDomainEvents : IHasDomainEvents
     {
         _domainEvents.Clear();
     }
-
-
-    public DateTime DateOccurred { get; set; }
 }

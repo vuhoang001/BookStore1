@@ -10,8 +10,8 @@ public class CreateBookEndpoint : IEndpoint<Ok<Guid>, CreateBookCommand, ISender
     public async Task<Ok<Guid>> HandleAsync(CreateBookCommand command, ISender sender,
         CancellationToken cancellationToken = default)
     {
-        var reuslt = await sender.Send(command, cancellationToken);
-        return TypedResults.Ok(reuslt);
+        var result = await sender.Send(command, cancellationToken);
+        return TypedResults.Ok(result);
     }
 
     public void MapEndpoint(IEndpointRouteBuilder app)
@@ -23,8 +23,8 @@ public class CreateBookEndpoint : IEndpoint<Ok<Guid>, CreateBookCommand, ISender
             .ProducesPostWithoutLocation<Guid>()
             .WithTags(nameof(Domain.AggregateModels.BookModel.Book))
             .WithName(nameof(CreateBookCommand))
-            .WithSummary("Create Author")
-            .WithDescription("Create a new author in the catalog system")
+            .WithSummary("Create Book")
+            .WithDescription("Create a new book in the catalog system")
             .MapToApiVersion(Versions.V1);
     }
 }
