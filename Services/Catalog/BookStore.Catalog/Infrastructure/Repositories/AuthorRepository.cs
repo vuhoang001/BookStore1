@@ -1,9 +1,9 @@
-using BookStore.Catalog.Domain.AggregateModels.BookModel;
+using BookStore.Catalog.Domain.AggregateModels.AuthorModel;
 using BuildingBlocks.Chassis.Repository;
 
 namespace BookStore.Catalog.Infrastructure.Repositories;
 
-public class BookRepository(CatalogDbContext context) : IBookRepository
+public class AuthorRepository(CatalogDbContext context) : IAuthorRepository
 {
     private readonly CatalogDbContext _context =
         context ?? throw new ArgumentNullException(nameof(context));
@@ -22,9 +22,9 @@ public class BookRepository(CatalogDbContext context) : IBookRepository
         return true;
     }
 
-    public Task<Book> AddAsync(Book book, CancellationToken cancellationToken = default)
+    public Task<Author> AddAsync(Author author, CancellationToken cancellationToken = default)
     {
-        var entry = context.Books.Add(book);
+        var entry = context.Authors.Add(author);
         return Task.FromResult(entry.Entity);
     }
 }

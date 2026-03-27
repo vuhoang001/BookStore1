@@ -1,4 +1,6 @@
+using BookStore.Catalog.Features.Author.Create;
 using BookStore.Catalog.Infrastructure;
+using BookStore.Catalog.Infrastructure.Blob;
 using BookStore.Catalog.Infrastructure.Services;
 using BuildingBlocks.Chassis.CQRS.Pipelines;
 using BuildingBlocks.Chassis.EndPoints;
@@ -25,7 +27,8 @@ internal static class Extensions
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<ICatalogApiMarker>())
             .AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>))
-            .AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+            .AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>))
+            .AddScoped<IPipelineBehavior<CreateAuthorCommand, Guid>, CreateAuthorCommandPreProcessor>();
 
         // Configuration fluent validation to scan for validators in the assembly containing the IRatingApiMarker interface, including internal types.
         services.AddValidatorsFromAssemblyContaining<ICatalogApiMarker>(
@@ -69,6 +72,8 @@ internal static class Extensions
         );
 
 
+        // Add minio blob storage
+        builder.AddMinioBlobStorage();
         services.AddEndpoints(typeof(ICatalogApiMarker));
 
         services.AddVersioning();

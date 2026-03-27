@@ -18,11 +18,7 @@
   <Folder Name="/Solution Items/">
     <File Path=".env" />
     <File Path=".env.example" />
-    <File Path=".env.prod" />
-    <File Path=".env.staging" />
     <File Path="compose.override.yaml" />
-    <File Path="compose.prod.yaml" />
-    <File Path="compose.staging.yaml" />
     <File Path="compose.yaml" />
   </Folder>
 </Solution>

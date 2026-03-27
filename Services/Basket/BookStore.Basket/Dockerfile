@@ -12,6 +12,7 @@ COPY ["Services/Basket/BookStore.Basket/BookStore.Basket.csproj", "Services/Bask
 COPY ["BuildingBlocks/BuildingBlocks.Chassis/BuildingBlocks.Chassis.csproj", "BuildingBlocks/BuildingBlocks.Chassis/"]
 COPY ["BuildingBlocks/BuildingBlocks.SharedKernel/BuildingBlocks.SharedKernel.csproj", "BuildingBlocks/BuildingBlocks.SharedKernel/"]
 COPY ["BuildingBlocks/BuildingBlocks.Constants/BuildingBlocks.Constants.csproj", "BuildingBlocks/BuildingBlocks.Constants/"]
+COPY ["BuildingBlocks/BuildingBlocks.Contracts/BuildingBlocks.Contracts.csproj", "BuildingBlocks/BuildingBlocks.Contracts/"]
 RUN dotnet restore "Services/Basket/BookStore.Basket/BookStore.Basket.csproj"
 COPY . .
 WORKDIR "/src/Services/Basket/BookStore.Basket"

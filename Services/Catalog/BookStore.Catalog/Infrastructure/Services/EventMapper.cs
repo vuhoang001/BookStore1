@@ -14,8 +14,8 @@ public class EventMapper : IEventMapper
         {
             BookCreateEvent bookCreateEvent => new BookCreatedIntegrationEvent(
                 bookCreateEvent.BookId,
-                bookCreateEvent.Title,  // Maps to BookName parameter
-                bookCreateEvent.Price   // Maps to BookPrice parameter
+                bookCreateEvent.Title,
+                bookCreateEvent.Price
             ),
             _ => throw new ArgumentOutOfRangeException(nameof(@event), @event, null),
         };

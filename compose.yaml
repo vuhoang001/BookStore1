@@ -1,17 +1,20 @@
-﻿version: '3.9'
+﻿version: "3.9"
 
 services:
+  minio:
+    image: minio/minio
+    container_name: minio
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - bookstore-network
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
-    environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-bookstore}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS:-bookstore123!}
-    ports:
-      - "5672:5672"
-      - "15672:15672"
     networks:
       - bookstore-network
+
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
@@ -36,6 +39,7 @@ services:
       dockerfile: Services/Catalog/BookStore.Catalog/Dockerfile
     depends_on:
       - sqlserver
+      - rabbitmq
     networks:
       - bookstore-network
 
@@ -51,6 +55,7 @@ services:
 
 volumes:
   sql_data:
+  minio_data:
 
 networks:
   bookstore-network:

@@ -15,8 +15,11 @@ public static class Extensions
         Action<IBusRegistrationContext, IRabbitMqBusFactoryConfigurator>? rabbitMqConfigure = null
     )
     {
-        var connectionString = builder.Configuration.GetConnectionString(Components.Queue) ??
-            throw new InvalidOperationException("RabbitMQ connection string is not configured.");
+        var connectionString = builder.Configuration.GetConnectionString(Components.Queue);
+        if (connectionString is null)
+        {
+            throw new InvalidOperationException("RabbitMQ connection string is not configured. Please ensure it is set in the configuration.");
+        }
 
         builder.Services.AddMassTransit(config =>
         {
@@ -28,16 +31,17 @@ public static class Extensions
 
             config.AddRequestClient(type);
 
+            busConfigure?.Invoke(config);
+
             config.UsingRabbitMq((context, configurator) =>
                 {
                     configurator.Host(new Uri(connectionString));
-                    configurator.ConfigureEndpoints(context);
                     configurator.UseMessageRetry(AddRetryConfiguration);
                     rabbitMqConfigure?.Invoke(context, configurator);
+
+                    configurator.ConfigureEndpoints(context);
                 }
             );
-
-            busConfigure?.Invoke(config);
         });
     }
 

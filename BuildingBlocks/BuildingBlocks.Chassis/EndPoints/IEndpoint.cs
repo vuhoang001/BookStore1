@@ -21,8 +21,8 @@ public interface IEndpoint<TResult, in TRequest> : IEndpoint
 public interface IEndpoint<TResult, in TRequest1, in TRequest2> : IEndpoint
 {
     Task<TResult> HandleAsync(
-        TRequest1 request1,
-        TRequest2 request2,
+        TRequest1 cmd,
+        TRequest2 sender,
         CancellationToken cancellationToken = default
     );
 }

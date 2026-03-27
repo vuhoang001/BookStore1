@@ -29,8 +29,7 @@ public class EventDispatcher(
 
         try
         {
-            // Publish the concrete message instance to preserve immutable record payloads.
-            await bus.Publish(integrationEvent, cancellationToken);
+            await bus.Publish((object)integrationEvent, cancellationToken);
 
             logger.LogInformation(
                 "EventDispatcher: Successfully published {IntegrationEventType} (EventId: {EventId}) to outbox/queue",

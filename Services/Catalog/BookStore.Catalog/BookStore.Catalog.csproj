@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Infrastructure\EntitiyConfigurations\" />
     <Folder Include="IntegrationEvents\Events\" />
     <Folder Include="IntegrationEvents\Handlers\" />
   </ItemGroup>

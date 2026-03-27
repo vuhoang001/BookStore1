@@ -18,7 +18,8 @@
     env_file: .env.prod
     environment:
       ASPNETCORE_ENVIRONMENT: Production
-      ConnectionStrings__DefaultConnection: ${CATALOG_CONN}
+      ConnectionStrings__catalogdb: ${CATALOG_CONN}
+      ConnectionStrings__queue: ${QUEUE_CONN}
     restart: always
 
   bookstore.gateway:

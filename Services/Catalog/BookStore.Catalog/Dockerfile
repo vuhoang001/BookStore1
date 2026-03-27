@@ -11,6 +11,7 @@ COPY ["Directory.Packages.props", "."]
 COPY ["Services/Catalog/BookStore.Catalog/BookStore.Catalog.csproj", "Services/Catalog/BookStore.Catalog/"]
 COPY ["BuildingBlocks/BuildingBlocks.SharedKernel/BuildingBlocks.SharedKernel.csproj", "BuildingBlocks/BuildingBlocks.SharedKernel/"]
 COPY ["BuildingBlocks/BuildingBlocks.Chassis/BuildingBlocks.Chassis.csproj", "BuildingBlocks/BuildingBlocks.Chassis/"]
+COPY ["BuildingBlocks/BuildingBlocks.Contracts/BuildingBlocks.Contracts.csproj", "BuildingBlocks/BuildingBlocks.Contracts/"]
 RUN dotnet restore "Services/Catalog/BookStore.Catalog/BookStore.Catalog.csproj"
 COPY . .
 WORKDIR "/src/Services/Catalog/BookStore.Catalog"
