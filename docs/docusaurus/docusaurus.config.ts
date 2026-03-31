@@ -7,7 +7,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
     title: 'BookWorm',
     tagline: 'Hoanggggf',
-    favicon: 'img/favicon.ico',
+    favicon: 'img/book.png',
 
     // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
     future: {
@@ -78,7 +78,8 @@ const config: Config = {
             title: 'BookWorm',
             logo: {
                 alt: 'My Site Logo',
-                src: 'img/logo.svg',
+                // src: 'img/logo.svg',
+                src: 'img/book.png',
             },
             items: [
                 {
