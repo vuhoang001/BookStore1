@@ -12,6 +12,8 @@
         <PackageReference Include="FluentValidation" />
         <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
         <PackageReference Include="Gridify" />
+        <PackageReference Include="Grpc.AspNetCore" />
+        <PackageReference Include="Grpc.Net.Client" />
         <PackageReference Include="MassTransit.EntityFrameworkCore" />
         <PackageReference Include="MassTransit.RabbitMQ" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design">

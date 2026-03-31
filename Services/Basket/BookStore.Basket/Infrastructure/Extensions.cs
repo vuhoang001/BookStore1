@@ -1,6 +1,7 @@
 using BuildingBlocks.Chassis.EF;
 using BuildingBlocks.Chassis.Repository;
 using BuildingBlocks.Constants.Core;
+using BookStore.Basket.Infrastructure.Grpc;
 
 namespace BookStore.Basket.Infrastructure;
 

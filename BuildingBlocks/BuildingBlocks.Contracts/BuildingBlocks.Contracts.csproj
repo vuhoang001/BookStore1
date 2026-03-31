@@ -7,11 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Catalog\Grpc\" />
+    <ProjectReference Include="..\BuildingBlocks.Chassis\BuildingBlocks.Chassis.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BuildingBlocks.Chassis\BuildingBlocks.Chassis.csproj" />
+    <PackageReference Include="Google.Protobuf" />
+    <PackageReference Include="Grpc.Core.Api" />
+    <PackageReference Include="Grpc.Tools">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

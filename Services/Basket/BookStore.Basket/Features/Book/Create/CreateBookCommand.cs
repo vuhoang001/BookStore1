@@ -1,23 +1,17 @@
-using BookStore.Basket.Domain.AggregateModels.BookModel;
+using BookStore.Basket.Infrastructure.Grpc.Services.Book;
 using BuildingBlocks.Chassis.CQRS;
+using BuildingBlocks.Chassis.Exceptions;
 
 namespace BookStore.Basket.Features.Book.Create;
 
-public sealed record CreateBookCommand(string Title, decimal Price) : ICommand<Guid>;
+public sealed record CreateBookCommand(string Title, decimal Price) : ICommand<string>;
 
-public sealed class CreateBookHandler(IBookRepository bookRepository, ILogger<CreateBookHandler> logger)
-    : ICommandHandler<CreateBookCommand, Guid>
+public sealed class CreateBookHandler(IBookService bookService, ILogger<CreateBookHandler> logger)
+    : ICommandHandler<CreateBookCommand, string>
 {
-    public async Task<Guid> Handle(CreateBookCommand command, CancellationToken cancellationToken)
+    public async Task<string> Handle(CreateBookCommand command, CancellationToken cancellationToken)
     {
-        var result = await bookRepository.AddAsync(
-            new Domain.AggregateModels.BookModel.Book(command.Title, command.Price),
-            cancellationToken);
-
-
-        await bookRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
-
-
-        return result.Id;
+        var result = await bookService.GetBookByIdAsync("123", cancellationToken);
+        return result is null ? throw new NotFoundException("Book not found") : result.Book.Id;
     }
 }

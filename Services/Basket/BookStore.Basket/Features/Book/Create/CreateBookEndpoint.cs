@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BookStore.Basket.Features.Book.Create;
 
-public class CreateBookEndpoint : IEndpoint<Ok<Guid>, CreateBookCommand, ISender>
+public class CreateBookEndpoint : IEndpoint<Ok<string>, CreateBookCommand, ISender>
 {
-    public async Task<Ok<Guid>> HandleAsync(CreateBookCommand command, ISender sender,
+    public async Task<Ok<string>> HandleAsync(CreateBookCommand command, ISender sender,
         CancellationToken cancellationToken = default)
     {
         var result = await sender.Send(command, cancellationToken);

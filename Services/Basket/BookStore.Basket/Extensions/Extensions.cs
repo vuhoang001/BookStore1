@@ -1,4 +1,5 @@
 using BookStore.Basket.Infrastructure;
+using BookStore.Basket.Infrastructure.Grpc;
 using BookStore.Basket.Infrastructure.Services;
 using BuildingBlocks.Chassis.CQRS.Pipelines;
 using BuildingBlocks.Chassis.EndPoints;
@@ -18,6 +19,7 @@ internal static class Extensions
         var services = builder.Services;
 
         builder.AddPersistenceServices();
+        builder.AddGrpcServices();
 
         services.AddScoped<IEventMapper, EventMapper>();
         services.AddScoped<IEventDispatcher, EventDispatcher>();

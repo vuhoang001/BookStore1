@@ -1,6 +1,7 @@
 using BookStore.Catalog.Features.Author.Create;
 using BookStore.Catalog.Infrastructure;
 using BookStore.Catalog.Infrastructure.Blob;
+using BookStore.Catalog.Infrastructure.Grpc;
 using BookStore.Catalog.Infrastructure.Services;
 using BuildingBlocks.Chassis.CQRS.Pipelines;
 using BuildingBlocks.Chassis.EndPoints;
@@ -75,6 +76,9 @@ internal static class Extensions
         // Add minio blob storage
         builder.AddMinioBlobStorage();
         services.AddEndpoints(typeof(ICatalogApiMarker));
+
+        // Add gRPC services
+        builder.AddGrpcServices();
 
         services.AddVersioning();
     }

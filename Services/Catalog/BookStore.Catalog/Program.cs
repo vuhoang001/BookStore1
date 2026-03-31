@@ -1,4 +1,5 @@
 using BookStore.Catalog.Extensions;
+using BookStore.Catalog.Infrastructure.Grpc.Services.Book;
 using BuildingBlocks.Chassis.ApiDocument;
 using BuildingBlocks.Chassis.EndPoints;
 using BuildingBlocks.Constants.Core;
@@ -27,6 +28,7 @@ var apiVersionSet = app.NewApiVersionSet()
     .Build();
 
 app.MapEndpoints(apiVersionSet);
+app.MapGrpcService<BookGrpcServiceImpl>();
 
 
 app.Run();
