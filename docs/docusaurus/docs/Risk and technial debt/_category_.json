@@ -1,0 +1,9 @@
+{
+  "label": "Risks and Technical Debt",
+  "position": 12,
+  "link": {
+    "type": "generated-index",
+    "description": "Known risks, open issues, and technical debt items."
+  }
+}
+

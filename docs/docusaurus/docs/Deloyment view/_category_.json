@@ -1,0 +1,9 @@
+{
+  "label": "Deployment View",
+  "position": 8,
+  "link": {
+    "type": "generated-index",
+    "description": "Infrastructure, nodes, and mapping of software to environments."
+  }
+}
+

@@ -1,0 +1,9 @@
+{
+  "label": "Architecture Decisions",
+  "position": 10,
+  "link": {
+    "type": "generated-index",
+    "description": "Key design decisions with rationale and consequences."
+  }
+}
+

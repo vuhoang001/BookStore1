@@ -1,0 +1,8 @@
+{
+  "label": "Architecture Constraints",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Technical, organizational, and legal constraints that shape the architecture."
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "label": "Cross-cutting Concepts",
+  "position": 9,
+  "link": {
+    "type": "generated-index",
+    "description": "Shared concepts and standards applied across the whole system."
+  }
+}
+
