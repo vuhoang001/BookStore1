@@ -27,4 +27,15 @@ public class AuthorRepository(CatalogDbContext context) : IAuthorRepository
         var entry = context.Authors.Add(author);
         return Task.FromResult(entry.Entity);
     }
+
+    public void Remove(Author author)
+    {
+        context.Authors.Remove(author);
+    }
+
+    public async Task<Author?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var result = await context.Authors.FindAsync([id], cancellationToken);
+        return result;
+    }
 }

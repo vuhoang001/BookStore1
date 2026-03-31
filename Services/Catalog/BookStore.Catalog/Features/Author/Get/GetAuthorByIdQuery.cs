@@ -43,4 +43,3 @@ public sealed class GetAuthorByIdHandler(CatalogDbContext context, IBlobService 
         );
     }
 }
-

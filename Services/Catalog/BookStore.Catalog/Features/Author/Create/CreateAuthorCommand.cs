@@ -10,8 +10,7 @@ public sealed class CreateAuthorCommand : ICommand<Guid>
     public string? AuthorBio { get; set; }
     public IFormFile? Image { get; set; }
 
-    [JsonIgnore]
-    public string? ImageName { get; set; }
+    [JsonIgnore] public string? ImageName { get; set; }
 }
 
 public class CreateAuthorHandler(IAuthorRepository authorRepository, ILogger<CreateAuthorHandler> logger)
@@ -19,21 +18,11 @@ public class CreateAuthorHandler(IAuthorRepository authorRepository, ILogger<Cre
 {
     public async Task<Guid> Handle(CreateAuthorCommand command, CancellationToken cancellationToken)
     {
-        logger.LogInformation(
-            "[ENDPOINT] CreateAuthorHandler called with AuthorName: {AuthorName}, AuthorBio: {AuthorBio}, ImageName: {ImageName}",
-            command.AuthorName, command.AuthorBio, command.ImageName);
-
         var author =
-            Domain.AggregateModels.AuthorModel.Author.Create(command.AuthorName, command.AuthorBio, command.ImageName);
+            new Domain.AggregateModels.AuthorModel.Author(command.AuthorName, command.AuthorBio, command.ImageName);
 
-        var result = await authorRepository.AddAsync(
-            author,
-            cancellationToken);
-
-
+        var result = await authorRepository.AddAsync(author, cancellationToken);
         await authorRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
-
-
-        return result.Id;
+        return author.Id;
     }
 }

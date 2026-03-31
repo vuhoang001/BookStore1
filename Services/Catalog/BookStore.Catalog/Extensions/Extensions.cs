@@ -8,6 +8,7 @@ using BuildingBlocks.Chassis.EndPoints;
 using BuildingBlocks.Chassis.EventBus;
 using BuildingBlocks.Chassis.EventBus.Dispatcher;
 using BuildingBlocks.Chassis.Exceptions;
+using BuildingBlocks.Chassis.Mapper;
 using FluentValidation;
 using MassTransit;
 using MediatR;
@@ -35,8 +36,7 @@ internal static class Extensions
         services.AddValidatorsFromAssemblyContaining<ICatalogApiMarker>(
             includeInternalTypes: true); // Register all endpoints
 
-
-        // Add exception handlers (specific first, global fallback last)
+ // Add exception handlers (specific first, global fallback last)
         services.AddExceptionHandler<ValidationExceptionHandler>();
         services.AddExceptionHandler<NotFoundExceptionHandler>();
         services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -72,6 +72,8 @@ internal static class Extensions
             }
         );
 
+        // Add mapper profiles
+        services.AddMapper(typeof(ICatalogApiMarker));
 
         // Add minio blob storage
         builder.AddMinioBlobStorage();

@@ -19,7 +19,7 @@ public class CreateAuthorEndpoint : IEndpoint<Ok<Guid>, CreateAuthorCommand, ISe
 
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("/author",
+        app.MapPost("/authors",
                     async ([FromForm] CreateAuthorCommand command, ISender sender, CancellationToken cancellationToken) =>
                     await HandleAsync(command, sender, cancellationToken)
             )
