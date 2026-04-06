@@ -1,5 +1,6 @@
 using BookStore.Catalog.Domain.AggregateModels.BookModel;
 using BuildingBlocks.Chassis.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.Catalog.Infrastructure.Repositories;
 
@@ -26,5 +27,12 @@ public class BookRepository(CatalogDbContext context) : IBookRepository
     {
         var entry = context.Books.Add(book);
         return Task.FromResult(entry.Entity);
+    }
+
+    public async Task<Book?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var result = await context.Books
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        return result;
     }
 }

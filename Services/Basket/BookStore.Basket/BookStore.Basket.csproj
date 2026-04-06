@@ -30,8 +30,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\EventHandlers\" />
+    <Folder Include="Infrastructure\Repositories\" />
+    <Folder Include="Infrastructure\Services\" />
     <Folder Include="IntegrationEvents\Events\" />
+    <Folder Include="IntegrationEvents\Handlers\" />
   </ItemGroup>
 
 </Project>

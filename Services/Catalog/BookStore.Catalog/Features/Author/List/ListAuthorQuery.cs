@@ -13,13 +13,13 @@ namespace BookStore.Catalog.Features.Author.List;
 public sealed record ListAuthorQuery(
     [property: Description("Number of items to return in a single page of results")]
     [property: DefaultValue(Pagination.DefaultPageIndex)]
-    int PageIndex,
+    int PageIndex = 1,
     [property: Description("Number of items to return in a single page of results")]
     [property: DefaultValue(Pagination.DefaultPageSize)]
-    int PageSize,
+    int PageSize = 20,
     [property: Description("Number of items to return in a single page of results")]
-    string? OrderBy,
-    string? Filter
+    string? OrderBy = null,
+    string? Filter = null
 ) : IQuery<PaginatedItemsViewModel>;
 
 public class ListAuthorHandler(

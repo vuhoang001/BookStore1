@@ -1,3 +1,4 @@
+using BookStore.Catalog.Exceptions.Errors;
 using BookStore.Catalog.Infrastructure;
 using BookStore.Catalog.Infrastructure.Blob;
 using BuildingBlocks.Chassis.CQRS;
@@ -27,7 +28,7 @@ public sealed class GetAuthorByIdHandler(CatalogDbContext context, IBlobService 
 
         if (author is null)
         {
-            throw NotFoundException.For<Domain.AggregateModels.AuthorModel.Author>(request.Id);
+            throw new NotFoundException(AuthorError.AuthorNotFound);
         }
 
         var imageUrl = string.IsNullOrWhiteSpace(author.ImageUrn)

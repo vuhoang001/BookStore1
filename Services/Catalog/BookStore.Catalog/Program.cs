@@ -2,6 +2,7 @@ using BookStore.Catalog.Extensions;
 using BookStore.Catalog.Infrastructure.Grpc.Services.Book;
 using BuildingBlocks.Chassis.ApiDocument;
 using BuildingBlocks.Chassis.EndPoints;
+using BuildingBlocks.Chassis.Exceptions;
 using BuildingBlocks.Constants.Core;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,9 +17,9 @@ builder.Services.AddApiDocument("Catalog", configure: o => o
 );
 var app = builder.Build();
 
-app.UseExceptionHandler();
-app.UseApiDocument();
+app.UseDefaultExceptionHandling();
 app.UseHttpsRedirection();
+app.UseApiDocument();
 
 
 var apiVersionSet = app.NewApiVersionSet()

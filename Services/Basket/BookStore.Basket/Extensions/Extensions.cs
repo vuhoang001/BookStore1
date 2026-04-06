@@ -1,10 +1,8 @@
 using BookStore.Basket.Infrastructure;
 using BookStore.Basket.Infrastructure.Grpc;
-using BookStore.Basket.Infrastructure.Services;
 using BuildingBlocks.Chassis.CQRS.Pipelines;
 using BuildingBlocks.Chassis.EndPoints;
 using BuildingBlocks.Chassis.EventBus;
-using BuildingBlocks.Chassis.EventBus.Dispatcher;
 using BuildingBlocks.Chassis.Exceptions;
 using FluentValidation;
 using MassTransit;
@@ -21,8 +19,8 @@ internal static class Extensions
         builder.AddPersistenceServices();
         builder.AddGrpcServices();
 
-        services.AddScoped<IEventMapper, EventMapper>();
-        services.AddScoped<IEventDispatcher, EventDispatcher>();
+        // services.AddScoped<IEventMapper, EventMapper>();
+        // services.AddScoped<IEventDispatcher, EventDispatcher>();
 
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<IBasketApiMarker>())
@@ -34,18 +32,8 @@ internal static class Extensions
             includeInternalTypes: true); // Register all endpoints
 
 
-        // Add exception handlers (specific first, global fallback last)
-        services.AddExceptionHandler<ValidationExceptionHandler>();
-        services.AddExceptionHandler<NotFoundExceptionHandler>();
-        services.AddExceptionHandler<GlobalExceptionHandler>();
-        services.AddProblemDetails(options =>
-        {
-            // Customize problem details to include traceId by default
-            options.CustomizeProblemDetails = context =>
-            {
-                context.ProblemDetails.Extensions["traceId"] = context.HttpContext.TraceIdentifier;
-            };
-        });
+        // Register standard exception handling and RFC7807 problem details in one place.
+        services.AddDefaultExceptionHandling();
 
 
         // Configure EventBus

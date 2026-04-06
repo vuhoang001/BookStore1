@@ -20,6 +20,8 @@ public static class Extensions
                 .WithPort(8081)
                 .Build();
 
+        services.AddGrpcHealthChecks();
+
         services
             .AddGrpcClient<BookGrpcService.BookGrpcServiceClient>(options =>
             {

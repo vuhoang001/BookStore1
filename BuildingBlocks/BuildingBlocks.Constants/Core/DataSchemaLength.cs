@@ -1,4 +1,4 @@
-﻿namespace BookWorm.Constants.Core;
+﻿namespace BuildingBlocks.Constants.Core;
 
 public static class DataSchemaLength
 {

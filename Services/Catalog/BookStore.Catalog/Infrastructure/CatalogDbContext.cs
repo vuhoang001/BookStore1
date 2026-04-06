@@ -1,5 +1,6 @@
 using BookStore.Catalog.Domain.AggregateModels.AuthorModel;
 using BookStore.Catalog.Domain.AggregateModels.BookModel;
+using BookStore.Catalog.Domain.AggregateModels.CategoryModel;
 using BookStore.Catalog.Domain.AggregateModels.PublisherModel;
 using BuildingBlocks.Chassis.Repository;
 using MassTransit;
@@ -12,12 +13,12 @@ public class CatalogDbContext(DbContextOptions<CatalogDbContext> options) : DbCo
 {
     public DbSet<Book> Books => Set<Book>();
     public DbSet<Author> Authors => Set<Author>();
-    
+
+    public DbSet<Category> Categories => Set<Category>();
     public DbSet<Publisher> Publishers => Set<Publisher>();
 
     public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
-    {
-        await SaveChangesAsync(cancellationToken);
+    { await SaveChangesAsync(cancellationToken);
         return true;
     }
 

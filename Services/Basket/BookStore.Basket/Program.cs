@@ -1,6 +1,7 @@
 using BookStore.Basket.Extensions;
 using BuildingBlocks.Chassis.ApiDocument;
 using BuildingBlocks.Chassis.EndPoints;
+using BuildingBlocks.Chassis.Exceptions;
 using BuildingBlocks.Constants.Core;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +17,7 @@ builder.Services.AddApiDocument("Basket", configure: o => o
 
 var app = builder.Build();
 
-app.UseExceptionHandler();
+app.UseDefaultExceptionHandling();
 app.UseApiDocument();
 app.UseHttpsRedirection();
 

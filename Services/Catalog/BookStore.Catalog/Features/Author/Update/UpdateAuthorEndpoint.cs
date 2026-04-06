@@ -17,7 +17,7 @@ public class UpdateAuthorEndpoint : IEndpoint<Ok, UpdateAuthorCommand, ISender>
 
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPatch("/authors/{id:guid}",
+        app.MapPut("/authors/{id:guid}",
                      async (Guid id, [FromForm] UpdateAuthorCommand request, ISender sender) =>
                      await HandleAsync(
                          new UpdateAuthorCommand()

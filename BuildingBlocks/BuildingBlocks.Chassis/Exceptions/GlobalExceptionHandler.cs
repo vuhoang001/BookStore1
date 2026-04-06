@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -10,6 +11,15 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IE
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception,
         CancellationToken cancellationToken)
     {
+        logger.LogInformation("[{Handler}] TryHandleAsync called with exception type: {ExceptionType}", nameof(GlobalExceptionHandler), exception?.GetType().Name);
+        
+        // Don't handle specific exception types - let their dedicated handlers do it
+        if (exception is NotFoundException or ValidationException)
+        {
+            logger.LogInformation("[{Handler}] Exception is {ExceptionType}, delegating to specific handler", nameof(GlobalExceptionHandler), exception.GetType().Name);
+            return false;
+        }
+        
         var traceId = Activity.Current?.Id ?? httpContext.TraceIdentifier;
 
         logger.LogError(

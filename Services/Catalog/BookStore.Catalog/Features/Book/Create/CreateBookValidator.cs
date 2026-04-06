@@ -1,17 +1,31 @@
+using BuildingBlocks.Constants.Core;
 using FluentValidation;
 
 namespace BookStore.Catalog.Features.Book.Create;
 
 public class CreateBookValidator : AbstractValidator<CreateBookCommand>
 {
-    public CreateBookValidator()
+    public CreateBookValidator(IValidator<IFormFile> validator)
     {
-        RuleFor(x => x.Title)
-            .NotEmpty()
-            .WithMessage("Title is required");
+        RuleFor(x => x.Title).NotEmpty().MaximumLength(DataSchemaLength.Medium);
 
-        RuleFor(x => x.Price)
-            .GreaterThan(10)
-            .WithMessage("Price must be greater than 10");
+        RuleFor(x => x.Description).MaximumLength(DataSchemaLength.SuperLarge);
+
+        RuleFor(x => x.Price).GreaterThan(0);
+
+        RuleFor(x => x.PriceSale).GreaterThan(0).LessThanOrEqualTo(x => x.Price);
+
+        RuleFor(x => x.CategoryId).NotEmpty();
+        
+        RuleFor(x => x.PublisherId).NotEmpty();
+        
+        RuleFor(x => x.AuthorIds).NotEmpty();
+
+        When(IsHasFiles, () => RuleFor(x => x.Image!).SetValidator(validator));
+    }
+    
+    private static bool IsHasFiles(CreateBookCommand command)
+    {
+        return command.Image is not null;
     }
 }

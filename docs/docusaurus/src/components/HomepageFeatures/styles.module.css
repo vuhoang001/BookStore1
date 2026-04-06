@@ -1,11 +1,75 @@
-.features {
-  display: flex;
-  align-items: center;
-  padding: 2rem 0;
-  width: 100%;
+/*.features {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  padding: 2rem 0;*/
+/*  width: 100%;*/
+/*}*/
+
+/*.featureSvg {*/
+/*  height: 200px;*/
+/*  width: 200px;*/
+/*}*/
+
+.wrapper {
+  padding: 6rem 2rem;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  color: white;
+  text-align: center;
 }
 
-.featureSvg {
-  height: 200px;
-  width: 200px;
+.header h2 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  color: #94a3b8;
+  margin-bottom: 3rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.feature {
+  padding: 2rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.feature:hover {
+  transform: translateY(-6px) scale(1.02);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.featureHighlight {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  transform: scale(1.05);
+}
+
+.featureHighlight:hover {
+  transform: scale(1.08);
+}
+
+.iconBox {
+  margin-bottom: 1rem;
+}
+
+.icon {
+  height: 60px;
+  width: 60px;
+}
+
+.feature h3 {
+  margin-bottom: 0.5rem;
+}
+
+.feature p {
+  color: #cbd5f5;
+  font-size: 0.95rem;
 }

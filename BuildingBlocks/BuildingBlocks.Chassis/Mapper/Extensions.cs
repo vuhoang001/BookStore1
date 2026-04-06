@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace BookWorm.Chassis.Mapper;
+namespace BuildingBlocks.Chassis.Mapper;
 
 public static class Extensions
 {

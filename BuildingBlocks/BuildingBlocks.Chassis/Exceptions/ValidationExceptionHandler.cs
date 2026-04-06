@@ -15,8 +15,11 @@ public sealed class ValidationExceptionHandler(
         CancellationToken cancellationToken
     )
     {
+        logger.LogInformation("[{Handler}] TryHandleAsync called with exception type: {ExceptionType}", nameof(ValidationExceptionHandler), exception?.GetType().Name);
+        
         if (exception is not ValidationException validationException)
         {
+            logger.LogInformation("[{Handler}] Exception is not ValidationException, returning false", nameof(ValidationExceptionHandler));
             return false;
         }
 

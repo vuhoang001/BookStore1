@@ -169,15 +169,26 @@ public static class BusMigrationDbContextExtensions
         CancellationToken cancellationToken)
         where TContext : DbContext
     {
-        try
+        var logger = services.GetRequiredService<ILogger<TContext>>();
+
+        var pendingMigrations = await context.Database.GetPendingMigrationsAsync(cancellationToken);
+        var pendingList = pendingMigrations as string[] ?? pendingMigrations.ToArray();
+
+        if (pendingList.Length == 0)
         {
-            await context.Database.MigrateAsync(cancellationToken);
+            logger.LogInformation("No pending migrations for context {DbContextName}", typeof(TContext).Name);
         }
-        catch (Exception e)
+        else
         {
-            // ignored
+            logger.LogInformation(
+                "Applying {MigrationCount} pending migration(s) for context {DbContextName}: {MigrationNames}",
+                pendingList.Length,
+                typeof(TContext).Name,
+                string.Join(", ", pendingList)
+            );
         }
 
+        await context.Database.MigrateAsync(cancellationToken);
         await seeder(context, services, cancellationToken);
     }
 

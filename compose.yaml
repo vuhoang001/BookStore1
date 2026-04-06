@@ -15,6 +15,14 @@ services:
     networks:
       - bookstore-network
 
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    volumes:
+      - redis_data:/data
+    networks:
+      - bookstore-network
+
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
@@ -40,6 +48,7 @@ services:
     depends_on:
       - sqlserver
       - rabbitmq
+      - redis
     networks:
       - bookstore-network
 
@@ -56,6 +65,7 @@ services:
 volumes:
   sql_data:
   minio_data:
+  redis_data:
 
 networks:
   bookstore-network:

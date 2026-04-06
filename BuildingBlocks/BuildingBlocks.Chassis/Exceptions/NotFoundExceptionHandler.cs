@@ -27,8 +27,11 @@ public sealed class NotFoundExceptionHandler(
         CancellationToken cancellationToken
     )
     {
+        logger.LogInformation("[{Handler}] TryHandleAsync called with exception type: {ExceptionType}", nameof(NotFoundExceptionHandler), exception?.GetType().Name);
+        
         if (exception is not NotFoundException notFoundException)
         {
+            logger.LogInformation("[{Handler}] Exception is not NotFoundException, returning false", nameof(NotFoundExceptionHandler));
             return false;
         }
 

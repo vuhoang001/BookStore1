@@ -3,6 +3,7 @@ namespace BuildingBlocks.Constants.Core;
 public static class Components
 {
     public const string Queue = "queue";
+    public const string Redis = "redis";
     public static class Database
     {
         public const string Catalog = "catalogdb";

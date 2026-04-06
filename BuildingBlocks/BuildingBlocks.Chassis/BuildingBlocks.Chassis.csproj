@@ -8,29 +8,33 @@
 
 
     <ItemGroup>
-        <PackageReference Include="AWSSDK.S3" />
-        <PackageReference Include="FluentValidation" />
-        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
-        <PackageReference Include="Gridify" />
-        <PackageReference Include="Grpc.AspNetCore" />
-        <PackageReference Include="Grpc.Net.Client" />
-        <PackageReference Include="MassTransit.EntityFrameworkCore" />
-        <PackageReference Include="MassTransit.RabbitMQ" />
+        <PackageReference Include="AWSSDK.S3"/>
+        <PackageReference Include="FluentValidation"/>
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions"/>
+        <PackageReference Include="Gridify"/>
+        <PackageReference Include="Grpc.AspNetCore"/>
+        <PackageReference Include="Grpc.AspNetCore.HealthChecks"/>
+        <PackageReference Include="Grpc.Net.Client"/>
+        <PackageReference Include="MassTransit.EntityFrameworkCore"/>
+        <PackageReference Include="MassTransit.RabbitMQ"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer"/>
+        <PackageReference Include="Microsoft.Extensions.Compliance.Abstractions"/>
         <PackageReference Include="Scalar.AspNetCore"/>
         <PackageReference Include="MediatR"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
-        <PackageReference Include="Scrutor" />
+        <PackageReference Include="Scrutor"/>
         <PackageReference Include="Swashbuckle.AspNetCore"/>
     </ItemGroup>
 
 
     <ItemGroup>
-        <ProjectReference Include="..\BuildingBlocks.Constants\BuildingBlocks.Constants.csproj" />
+        <ProjectReference Include="..\BuildingBlocks.Constants\BuildingBlocks.Constants.csproj"/>
         <ProjectReference Include="..\BuildingBlocks.SharedKernel\BuildingBlocks.SharedKernel.csproj"/>
     </ItemGroup>
 

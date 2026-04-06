@@ -12,10 +12,10 @@ public class EventMapper : IEventMapper
     {
         return @event switch
         {
-            BookCreateEvent bookCreateEvent => new BookCreatedIntegrationEvent(
-                bookCreateEvent.BookId,
-                bookCreateEvent.Title,
-                bookCreateEvent.Price
+            BookCreatedEvent bookCreatedEvent => new BookCreatedIntegrationEvent(
+                bookCreatedEvent.Book.Id,
+                bookCreatedEvent.Book.Title ?? string.Empty,
+                bookCreatedEvent.Book.Price.OriginalPrice
             ),
             _ => throw new ArgumentOutOfRangeException(nameof(@event), @event, null),
         };

@@ -1,27 +1,42 @@
+using System.Text.Json.Serialization;
 using BookStore.Catalog.Domain.AggregateModels.BookModel;
 using BuildingBlocks.Chassis.CQRS;
 
 namespace BookStore.Catalog.Features.Book.Create;
 
-public sealed record CreateBookCommand(string Title, decimal Price) : ICommand<Guid>;
+public sealed record CreateBookCommand(
+    string Title,
+    string Description,
+    IFormFile? Image,
+    decimal Price,
+    decimal? PriceSale,
+    Guid CategoryId,
+    Guid PublisherId,
+    Guid[] AuthorIds
+) : ICommand<Guid>
+{
+    [JsonIgnore] public string? ImageName { get; set; }
+};
 
 public sealed class CreateBookHandler(IBookRepository bookRepository, ILogger<CreateBookHandler> logger)
     : ICommandHandler<CreateBookCommand, Guid>
 {
-    public async Task<Guid> Handle(CreateBookCommand command, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateBookCommand request, CancellationToken cancellationToken)
     {
-        logger.LogInformation("[ENDPOINT] CreateBookHandler called with Title: {Title}, Price: {Price}", 
-                              command.Title, command.Price);
-
+        var book = new Catalog.Domain.AggregateModels.BookModel.Book(
+            request.Title,
+            request.Description,
+            request.ImageName,
+            request.Price,
+            request.PriceSale,
+            request.CategoryId,
+            request.PublisherId,
+            request.AuthorIds
+        );
         var result = await bookRepository.AddAsync(
-            new Catalog.Domain.AggregateModels.BookModel.Book(command.Title, command.Price),
-            cancellationToken);
-
-        logger.LogInformation("[DB-BEFORE-SAVE] Book added to repository with Id: {BookId}", result.Id);
+            book, cancellationToken);
 
         await bookRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
-
-        logger.LogInformation("[DB-SAVED] Book saved to database with Id: {BookId}", result.Id);
 
         return result.Id;
     }

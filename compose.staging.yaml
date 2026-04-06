@@ -15,6 +15,9 @@
       ASPNETCORE_ENVIRONMENT: Staging
       ConnectionStrings__catalogdb: ${CATALOG_CONN}
       ConnectionStrings__queue: ${QUEUE_CONN}
+      ConnectionStrings__redis: ${REDIS_CONN}
+      Caching__MaximumPayloadBytes: ${CACHE_MAX_PAYLOAD_BYTES}
+      Caching__Expiration: ${CACHE_EXPIRATION}
     restart: on-failure
 
   bookstore.gateway:

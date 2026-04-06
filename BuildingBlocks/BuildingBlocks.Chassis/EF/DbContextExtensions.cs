@@ -21,12 +21,16 @@ public static class DbContextExtensions
             services.AddScoped<IDomainEventDispatcher, MediatorDomainEventDispatcher>();
         }
 
+        var connectionString = builder.Configuration.GetConnectionString(name)
+                               ?? throw new InvalidOperationException(
+                                   $"Missing connection string '{name}' for DbContext {typeof(TDbContext).Name}.");
+
         // Run extra registrations at composition time, not inside DbContext options creation.
         action?.Invoke(builder);
 
         services.AddDbContext<TDbContext>((sp, options) =>
         {
-            options.UseSqlServer(builder.Configuration.GetConnectionString(name), sql =>
+            options.UseSqlServer(connectionString, sql =>
                 {
                     sql.MigrationsAssembly(typeof(TDbContext).Assembly.FullName);
                     sql.EnableRetryOnFailure();

@@ -16,7 +16,7 @@ public class UpdatePublisherEndpoint : IEndpoint<Ok, UpdatePublisherCommand, ISe
 
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPatch("/publishers/{id:guid}",
+        app.MapPut("/publishers/{id:guid}",
                      async (Guid id, UpdatePublisherCommand request, ISender sender) =>
                          await HandleAsync(new UpdatePublisherCommand(id, request.Name), sender)
             )
