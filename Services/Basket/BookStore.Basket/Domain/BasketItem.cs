@@ -12,8 +12,7 @@ public sealed class BasketItem() : IValidatableObject
         Quantity = quantity;
     }
 
-    [DisallowNull]
-    public string? Id { get; private set; }
+    [DisallowNull] public string? Id { get; private set; }
 
     public int Quantity { get; }
 

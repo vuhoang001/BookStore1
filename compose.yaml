@@ -1,4 +1,4 @@
-﻿version: "3.9"
+﻿#version: "3.9"
 
 services:
   minio:
@@ -31,6 +31,16 @@ services:
     networks:
       - bookstore-network
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.1
+    container_name: keycloak
+    command: start-dev --http-port=8080 --import-realm
+    volumes:
+      - keycloak_data:/opt/keycloak/data
+      - ./Client/apps/realms:/opt/keycloak/data/import:ro
+    networks:
+      - bookstore-network
+
   bookstore.basket:
     build:
       context: .
@@ -59,6 +69,7 @@ services:
     depends_on:
       - bookstore.basket
       - bookstore.catalog
+      - keycloak
     networks:
       - bookstore-network
 
@@ -66,6 +77,7 @@ volumes:
   sql_data:
   minio_data:
   redis_data:
+  keycloak_data:
 
 networks:
   bookstore-network:

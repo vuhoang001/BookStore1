@@ -1,5 +1,6 @@
 using BookStore.Basket.Infrastructure;
 using BookStore.Basket.Infrastructure.Grpc;
+using BuildingBlocks.Chassis.Cors;
 using BuildingBlocks.Chassis.CQRS.Pipelines;
 using BuildingBlocks.Chassis.EndPoints;
 using BuildingBlocks.Chassis.EventBus;
@@ -15,6 +16,9 @@ internal static class Extensions
     public static void AddApplicationService(this IHostApplicationBuilder builder)
     {
         var services = builder.Services;
+
+        // AddCors
+        builder.AddDefaultCors();
 
         builder.AddPersistenceServices();
         builder.AddGrpcServices();

@@ -1,5 +1,6 @@
 using BookStore.Basket.Extensions;
 using BuildingBlocks.Chassis.ApiDocument;
+using BuildingBlocks.Chassis.Cors;
 using BuildingBlocks.Chassis.EndPoints;
 using BuildingBlocks.Chassis.Exceptions;
 using BuildingBlocks.Constants.Core;
@@ -20,6 +21,7 @@ var app = builder.Build();
 app.UseDefaultExceptionHandling();
 app.UseApiDocument();
 app.UseHttpsRedirection();
+app.UseDefaultCors();
 
 var apiVersionSet = app.NewApiVersionSet()
     .HasApiVersion(Versions.V1)

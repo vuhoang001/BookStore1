@@ -6,6 +6,7 @@ using BookStore.Catalog.Infrastructure.Blob;
 using BookStore.Catalog.Infrastructure.Grpc;
 using BookStore.Catalog.Infrastructure.Services;
 using BuildingBlocks.Chassis.Caching;
+using BuildingBlocks.Chassis.Cors;
 using BuildingBlocks.Chassis.CQRS.Pipelines;
 using BuildingBlocks.Chassis.EndPoints;
 using BuildingBlocks.Chassis.EventBus;
@@ -28,33 +29,33 @@ internal static class Extensions
 
         builder.AddPersistenceServices();
 
+        // AddCors
+        builder.AddDefaultCors();
+
         services.AddScoped<IEventMapper, EventMapper>();
         services.AddScoped<IEventDispatcher, EventDispatcher>();
 
         services.Configure<CachingOptions>(builder.Configuration.GetSection(CachingOptions.ConfigurationSection));
 
         var cachingOptions = builder.Configuration
-            .GetSection(CachingOptions.ConfigurationSection)
-            .Get<CachingOptions>()
+                .GetSection(CachingOptions.ConfigurationSection)
+                .Get<CachingOptions>()
             ?? new CachingOptions
             {
                 MaximumPayloadBytes = 1024 * 1024,
-                Expiration = TimeSpan.FromMinutes(10),
+                Expiration          = TimeSpan.FromMinutes(10),
             };
 
         var redisConnectionString = builder.Configuration.GetConnectionString(Components.Redis);
 
-        services.AddStackExchangeRedisCache(options =>
-        {
-            options.Configuration = redisConnectionString;
-        });
+        services.AddStackExchangeRedisCache(options => { options.Configuration = redisConnectionString; });
 
         services.AddHybridCache(options =>
         {
             options.MaximumPayloadBytes = cachingOptions.MaximumPayloadBytes;
             options.DefaultEntryOptions = new()
             {
-                Expiration = cachingOptions.Expiration,
+                Expiration           = cachingOptions.Expiration,
                 LocalCacheExpiration = cachingOptions.Expiration,
             };
         });
@@ -62,7 +63,7 @@ internal static class Extensions
         services.AddMediatR(cfg =>
             {
                 cfg.RegisterServicesFromAssemblyContaining<ICatalogApiMarker>();
-                
+
                 cfg.AddOpenBehavior(typeof(RequestPostProcessorBehavior<,>));
                 cfg.AddRequestPostProcessor<UpdateBookCommandPostProcessor>();
             })
@@ -101,9 +102,7 @@ internal static class Extensions
                 );
             }
         );
-        
-        
-        
+
 
         // Add mapper profiles
         services.AddMapper(typeof(ICatalogApiMarker));

@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\Repositories\" />
+    <Folder Include="Infrastructure\EntityConfigurations\" />
     <Folder Include="Infrastructure\Services\" />
     <Folder Include="IntegrationEvents\Events\" />
     <Folder Include="IntegrationEvents\Handlers\" />

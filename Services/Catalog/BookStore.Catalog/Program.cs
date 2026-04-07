@@ -1,6 +1,7 @@
 using BookStore.Catalog.Extensions;
 using BookStore.Catalog.Infrastructure.Grpc.Services.Book;
 using BuildingBlocks.Chassis.ApiDocument;
+using BuildingBlocks.Chassis.Cors;
 using BuildingBlocks.Chassis.EndPoints;
 using BuildingBlocks.Chassis.Exceptions;
 using BuildingBlocks.Constants.Core;
@@ -20,6 +21,7 @@ var app = builder.Build();
 app.UseDefaultExceptionHandling();
 app.UseHttpsRedirection();
 app.UseApiDocument();
+app.UseDefaultCors();
 
 
 var apiVersionSet = app.NewApiVersionSet()
