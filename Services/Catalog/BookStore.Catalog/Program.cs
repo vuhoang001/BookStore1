@@ -23,6 +23,10 @@ app.UseHttpsRedirection();
 app.UseApiDocument();
 app.UseDefaultCors();
 
+// app.UseMiddleware<KeycloakTokenIntrospectionMiddleware>();
+app.UseAuthentication();
+app.UseAuthorization();
+
 
 var apiVersionSet = app.NewApiVersionSet()
     .HasApiVersion(Versions.V1)

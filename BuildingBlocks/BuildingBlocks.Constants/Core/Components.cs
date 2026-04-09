@@ -4,6 +4,7 @@ public static class Components
 {
     public const string Queue = "queue";
     public const string Redis = "redis";
+    public const string KeyCloak = "keycloak";
     public static class Database
     {
         public const string Catalog = "catalogdb";

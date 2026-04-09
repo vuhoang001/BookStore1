@@ -26,6 +26,7 @@ public class ListPublisherEndpoint : IEndpoint<Ok<PaginatedItemsViewModel>, List
             .WithName(nameof(ListPublisherQuery))
             .WithSummary("List publishers")
             .WithDescription("List all publisher in the catalog system")
+            .RequireAuthorization()
             .MapToApiVersion(Versions.V1);
     }
 }

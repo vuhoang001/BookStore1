@@ -13,6 +13,8 @@ using BuildingBlocks.Chassis.EventBus;
 using BuildingBlocks.Chassis.EventBus.Dispatcher;
 using BuildingBlocks.Chassis.Exceptions;
 using BuildingBlocks.Chassis.Mapper;
+using BuildingBlocks.Chassis.Security.Extensions;
+using BuildingBlocks.Chassis.Security.Keycloak;
 using BuildingBlocks.Constants.Core;
 using FluentValidation;
 using MassTransit;
@@ -28,6 +30,12 @@ internal static class Extensions
         var services = builder.Services;
 
         builder.AddPersistenceServices();
+
+        builder.AddDefaultAuthentication()
+            .WithKeycloakClaimsTransformation();
+            // .WithKeycloakTokenIntrospection();
+
+        services.AddAuthorization();
 
         // AddCors
         builder.AddDefaultCors();
@@ -113,6 +121,7 @@ internal static class Extensions
 
         // Add gRPC services
         builder.AddGrpcServices();
+
 
         services.AddVersioning();
     }

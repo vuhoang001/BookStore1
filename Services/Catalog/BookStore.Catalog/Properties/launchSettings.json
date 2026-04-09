@@ -7,7 +7,11 @@
       "launchBrowser": false,
       "applicationUrl": "http://localhost:5272",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "Identity__AuthServerUrl": "http://localhost:8088",
+          "Identity__Realm": "BookStoreRealm",
+        "Identity__ClientId": "bookstore-client",
+        "Identity__ClientSecret": ""
       }
     },
     "https": {
@@ -16,7 +20,11 @@
       "launchBrowser": false,
       "applicationUrl": "https://localhost:7042;http://localhost:5272",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "Identity__AuthServerUrl": "http://localhost:8088",
+        "Identity__Realm": "BookStoreRealm",
+        "Identity__ClientId": "bookstore-client",
+        "Identity__ClientSecret": ""
       }
     }
   }

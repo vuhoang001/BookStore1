@@ -1,0 +1,59 @@
+using System.Security.Claims;
+using System.Text.Json.Nodes;
+using BuildingBlocks.Chassis.Security.Extensions;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
+
+namespace BuildingBlocks.Chassis.Security.Keycloak;
+
+public sealed class KeycloakRolesClaimsTransformation(
+    IOptionsSnapshot<JwtBearerOptions> jwtBearerOptions
+) : IClaimsTransformation
+{
+    public Task<ClaimsPrincipal> TransformAsync(ClaimsPrincipal principal)
+    {
+        var options = jwtBearerOptions.Get(JwtBearerDefaults.AuthenticationScheme);
+        var clientId =
+            options.TokenValidationParameters.ValidAudience
+            ?? options.TokenValidationParameters.ValidAudiences.FirstOrDefault()
+            ?? throw new InvalidOperationException("Audience is not set on JwtBearerOptions");
+
+        if (
+            !principal.TryGetJsonClaim("resource_access", out var resourceAccess)
+            || !principal.TryGetJsonClaim("realm_access", out var realmAccess)
+            || resourceAccess[clientId] is not JsonObject resourceNode
+            || resourceNode["roles"] is not JsonArray resourceRoles
+            || realmAccess["roles"] is not JsonArray realmRoles
+        )
+        {
+            return Task.FromResult(principal);
+        }
+
+        var claimsIdentity = new ClaimsIdentity();
+
+        // Convert resource roles to regular roles.
+        var resourceRoleClaims = resourceRoles
+            .GetValues<string>()
+            .Where(role =>
+                       !claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Role && c.Value == role)
+            )
+            .Select(role => new Claim(ClaimTypes.Role, role));
+
+        claimsIdentity.AddClaims(resourceRoleClaims);
+
+        // Convert realm roles to regular roles.
+        var realmRoleClaims = realmRoles
+            .GetValues<string>()
+            .Where(role =>
+                       !claimsIdentity.HasClaim(c => c.Type == ClaimTypes.Role && c.Value == role)
+            )
+            .Select(role => new Claim(ClaimTypes.Role, role));
+
+        claimsIdentity.AddClaims(realmRoleClaims);
+
+        principal.AddIdentity(claimsIdentity);
+
+        return Task.FromResult(principal);
+    }
+}

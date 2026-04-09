@@ -1,7 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { getAccessToken, logout } from "./keycloak.js";
 import { ApiError, ApiErrorResponse, RequestOptions } from "../types/common.js";
-import { cwd } from "process";
 
 
 

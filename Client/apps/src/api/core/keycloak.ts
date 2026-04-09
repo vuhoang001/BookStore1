@@ -7,7 +7,7 @@ interface KeycloakConfig {
 }
 
 const resolveConfig = (): KeycloakConfig => {
-    const url = 'http://localhost:8088'; // Keycloak server URL
+    const url = 'http://localhost:8080'; // Keycloak server URL
     const realm = 'BookStoreRealm';
     const clientId = 'bookstore-client';
 

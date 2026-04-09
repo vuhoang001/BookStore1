@@ -18,6 +18,10 @@
       ConnectionStrings__redis: ${REDIS_CONN}
       Caching__MaximumPayloadBytes: ${CACHE_MAX_PAYLOAD_BYTES}
       Caching__Expiration: ${CACHE_EXPIRATION}
+      Identity__AuthServerUrl: ${IDENTITY_AUTH_SERVER_URL}
+      Identity__Realm: ${IDENTITY_REALM}
+      Identity__ClientId: ${IDENTITY_CLIENT_ID}
+      Identity__ClientSecret: ${IDENTITY_CLIENT_SECRET}
     restart: on-failure
 
   bookstore.gateway:

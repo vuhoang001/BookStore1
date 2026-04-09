@@ -48,7 +48,7 @@ const pageSize = ref(10);
 
 onMounted(async () => {
     try {
-        const id = '470e7541-fca7-4660-e784-08de94591f32';
+        const id = '196a73b7-35d0-416e-0675-08de954cdd3b';
         publisher.value = await publisherService.getById(id);
     } catch (error) {
         console.error('Failed to fetch publisher data:', error);
